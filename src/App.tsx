@@ -1,24 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import { useState, useEffect } from "react";
+import { AxiosError } from "axios";
+import Axios from "axios";
 
-function App() {
+function useTextLoader(url: string): JSX.Element {
+  const [text, setText] = useState("");
+  useEffect(() => {
+    Axios.get(url)
+      .then((response: any) => {
+        setText(response.data);
+      })
+      .catch((error: AxiosError) => {
+        console.log(error);
+      });
+  }, [url]);
+  return (
+    <p>
+      Text loaded from "{url}": "{text}"
+    </p>
+  );
+}
+
+function App(): JSX.Element {
+  {/* Load text from the server at "http://54.243.56.11/text.txt" */}
+  const text: JSX.Element = useTextLoader("/text.txt");
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>This is a HTML h1 header</h1>
+      <p>This is a HTML paragraph</p>
+      {text}
     </div>
   );
 }
