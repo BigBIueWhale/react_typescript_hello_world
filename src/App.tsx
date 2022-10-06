@@ -27,7 +27,7 @@ function App(): JSX.Element {
   const text: JSX.Element = useTextLoader("/text.txt");
   return (
     <div className="App">
-      <h1>This is a HTML h1 header</h1>
+      <h1>This is a HTML h1 header hello</h1>
       <p>This is a HTML paragraph</p>
       {text}
     </div>
