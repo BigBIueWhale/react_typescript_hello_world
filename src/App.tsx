@@ -22,12 +22,37 @@ function useTextLoader(url: string): JSX.Element {
   );
 }
 
+// Create statically-typed props for the button component
+interface ButtonProps {
+  text: string;
+  onClick: () => void;
+}
+
+// Create button component
+function useButton(props: ButtonProps): JSX.Element {
+  return (
+    <button onClick={props.onClick} className="button">
+      {props.text}
+    </button>
+  );
+}
+
 function App(): JSX.Element {
   {/* Load text from the server at "http://54.243.56.11/text.txt" */}
   const text: JSX.Element = useTextLoader("/text.txt");
+  // Create props
+  const buttonProps: ButtonProps = {
+    text: "Click me!",
+    onClick: () => {
+      alert("You clicked the button!");
+    },
+  };
+  // Create button
+  const button: JSX.Element = useButton(buttonProps);
   return (
     <div className="App">
       <h1>This is a HTML h1 header</h1>
+      {button}
       <p>This is a HTML paragraph</p>
       {text}
     </div>
